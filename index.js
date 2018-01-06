@@ -5,6 +5,10 @@ import { makeExecutableSchema } from 'graphql-tools';
 
 import typeDefs from './schema';
 import resolvers from './resolvers';
+import models from './models';
+
+// import environmental variables from our variables.env file
+require('dotenv').config({ path: './variables.env' });
 
 // The schema and resolvers are combined together
 const schema = makeExecutableSchema({
@@ -13,7 +17,6 @@ const schema = makeExecutableSchema({
 });
 
 const app = express();
-const PORT = 8081;
 const graphqlEndpoint = '/graphql';
 
 app.use(
@@ -24,9 +27,11 @@ app.use(
 
 app.use(
   '/graphical',
-  graphiqlExpress({ endpointURL: '/graphql' }), // Tell graphical where our graphql endpoint is
+  graphiqlExpress({ endpointURL: graphqlEndpoint }), // Tell graphical where our graphql endpoint is
 );
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+// sync() will create all table if they doesn't exist in database
+models.sequelize.sync({ force: true }).then(() => {
+  console.log(`Listening on port ${process.env.PORT}`);
+  app.listen(process.env.PORT);
 });
