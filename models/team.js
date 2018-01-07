@@ -12,7 +12,10 @@ export default (sequelize, DataTypes) => {
     // m:m
     Team.belongsToMany(models.User, {
       through: 'member',
-      foreignKey: 'teamId',
+      foreignKey: {
+        name: 'teamId',
+        field: 'team_id',
+      },
     });
 
     // 1:m

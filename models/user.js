@@ -16,13 +16,19 @@ export default (sequelize, DataTypes) => {
     // (To, options)
     User.belongsToMany(models.Team, {
       through: 'member',
-      foreignKey: 'userId',
+      foreignKey: {
+        name: 'userId',
+        field: 'user_id',
+      },
     });
 
     // n:m
     User.belongsToMany(models.Channel, {
       through: 'channel_member',
-      foreignKey: 'userId',
+      foreignKey: {
+        name: 'userId',
+        field: 'user_id',
+      },
     });
   };
 

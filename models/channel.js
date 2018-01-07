@@ -8,13 +8,16 @@ export default (sequelize, DataTypes) => {
   Channel.associate = (models) => {
     // 1:m
     Channel.belongsTo(models.Team, {
-      foreignKey: 'teamId',
+      foreignKey: 'team_id',
     });
 
     // n:m
     Channel.belongsToMany(models.User, {
       through: 'channel_member',
-      foreignKey: 'channelId',
+      foreignKey: {
+        name: 'channelId', // camelcase in graphql
+        field: 'channel_id', // snake case in postgres
+      },
     });
   };
 
