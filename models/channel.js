@@ -8,7 +8,10 @@ export default (sequelize, DataTypes) => {
   Channel.associate = (models) => {
     // 1:m
     Channel.belongsTo(models.Team, {
-      foreignKey: 'team_id',
+      foreignKey: {
+        name: 'teamId',
+        field: 'team_id',
+      },
     });
 
     // n:m

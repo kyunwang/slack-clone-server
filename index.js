@@ -21,7 +21,15 @@ const graphqlEndpoint = '/graphql';
 app.use(
   graphqlEndpoint,
   bodyParser.json(),
-  graphqlExpress({ schema }), // Here we handle our endpoint
+  graphqlExpress({
+    schema,
+    context: {
+      models,
+      user: {
+        id: 1,
+      },
+    },
+  }), // Here we handle our endpoint
 );
 
 app.use(
@@ -30,7 +38,7 @@ app.use(
 );
 
 // sync() will create all table if they doesn't exist in database
-models.sequelize.sync({ force: true }).then(() => {
+models.sequelize.sync({ force: false }).then(() => {
   console.log(`Listening on port ${process.env.PORT}`);
   app.listen(process.env.PORT);
 });
