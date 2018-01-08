@@ -2,10 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
-
-import typeDefs from './schema';
-import resolvers from './resolvers';
 import models from './models';
+// import resolvers from './graphql/resolvers';
+import { typeDefs, resolvers } from './graphql';
 
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: './variables.env' });
