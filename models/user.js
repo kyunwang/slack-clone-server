@@ -1,36 +1,62 @@
 export default (sequelize, DataTypes) => {
-  // (name of table, )
+  // Define the table called 'user'
   const User = sequelize.define('user', {
     username: {
       type: DataTypes.STRING,
       unique: true,
+      validate: {
+        isAlphanumeric: {
+          // Argument
+          args: true,
+          // Error message
+          msg: 'The username may only contain letters and numbers',
+        },
+        len: {
+          args: [3, 30],
+          msg: 'The username needs to be between 3 and 30 characters',
+        },
+      },
     },
     email: {
       type: DataTypes.STRING,
       unique: true,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'The email is invalid. Made a typo?',
+        },
+      },
     },
     password: DataTypes.STRING,
   });
 
+
   User.associate = (models) => {
-    // (To, options)
+    // A join table
+
+    // N:M
+    // A user belongs to many teams
+    // A team can have many users
     User.belongsToMany(models.Team, {
       through: 'member',
       foreignKey: {
-        name: 'userId',
-        field: 'user_id',
+        name: 'userId', // Camelcase in graphql
+        field: 'user_id', // Snake_case in postgres
       },
     });
 
-    // n:m
+    // N:M
+    // A user can be in many channels
+    // A channel can have many users
     User.belongsToMany(models.Channel, {
       through: 'channel_member',
       foreignKey: {
-        name: 'userId',
-        field: 'user_id',
+        name: 'userId', // Camelcase in graphql
+        field: 'user_id', // Snake_case in postgres
       },
     });
   };
 
+  // Return the user
   return User;
 };

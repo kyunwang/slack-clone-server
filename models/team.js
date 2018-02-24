@@ -8,17 +8,20 @@ export default (sequelize, DataTypes) => {
   });
 
   Team.associate = (models) => {
-    // (To, options)
-    // m:m
+	 // M:M
+	 // A team has many users
+    // A user can be in many teams
     Team.belongsToMany(models.User, {
       through: 'member',
       foreignKey: {
-        name: 'teamId',
-        field: 'team_id',
+        name: 'teamId', // Camelcase in graphql
+        field: 'team_id', // Snake_case in postgres
       },
     });
 
-    // 1:m
+	 // 1:M
+	 // A owner can have many teams.
+    // A team can have one owner
     Team.belongsTo(models.User, {
       foreignKey: {
         name: 'owner',

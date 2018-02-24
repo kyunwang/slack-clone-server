@@ -6,20 +6,24 @@ export default (sequelize, DataTypes) => {
   });
 
   Channel.associate = (models) => {
-    // 1:m
+    // 1:M
+    // A channel can have one team
+    // A team can have many channels
     Channel.belongsTo(models.Team, {
       foreignKey: {
-        name: 'teamId',
-        field: 'team_id',
+        name: 'teamId', // Camelcase in graphql
+        field: 'team_id', // Snake_case in postgres
       },
     });
 
-    // n:m
+    // N:M
+    // A channel has many users
+    // A user has many channels
     Channel.belongsToMany(models.User, {
       through: 'channel_member',
       foreignKey: {
-        name: 'channelId', // camelcase in graphql
-        field: 'channel_id', // snake case in postgres
+        name: 'channelId', // Camelcase in graphql
+        field: 'channel_id', // Snake_case in postgres
       },
     });
   };

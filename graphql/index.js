@@ -1,6 +1,6 @@
 // Importing our schemas and resolvers to merge them to one item/object each
-import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
 import path from 'path';
+import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
 
 // Getting all the schemas
 const schemaArray = fileLoader(path.join(__dirname, './schema'));

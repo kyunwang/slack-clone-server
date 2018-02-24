@@ -4,17 +4,23 @@ export default (sequelize, DataTypes) => {
   });
 
   Message.associate = (models) => {
-    // 1:M
+	 // 1:M
+	 // A message belongs to one channel
+	 // A channel can have many messages
     Message.belongsTo(models.Channel, {
       foreignKey: {
-        name: 'channelId',
-        field: 'channel_id',
+        name: 'channelId', // Camelcase in graphql
+        field: 'channel_id', // Snake_case in postgres
       },
-    });
+	 });
+
+	 // 1:M
+	 // A message can belong to one user
+    // A user can have many messages
     Message.belongsTo(models.User, {
       foreignKey: {
-        name: 'userId',
-        field: 'user_id',
+        name: 'userId', // Camelcase in graphql
+        field: 'user_id', // Snake_case in postgres
       },
     });
   };
