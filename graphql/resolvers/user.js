@@ -24,31 +24,13 @@ export default {
     getAllUsers: (parent, args, { models }) => models.User.findAll(),
   },
   Mutation: {
-    login: async (parent, { email, password }, { models, SECRET, SECRET2 }) => tryLogin(email, password, models, SECRET, SECRET2),
-    register: async (parent, { password, ...otherArgs }, { models }) => {
-      try {
-        // Check the length of the password
-        if (password.length < 6 || password.length > 100) {
-          // Return an error if ...
-          return {
-            ok: false,
-            errors: [
-              {
-                path: 'password',
-                message: 'The password needs to be between 6 and 100 characters long',
-              },
-            ],
-          };
-        }
-        // Hash the password with 12 saltrounds
-        const hashedPassword = await bcrypt.hash(password, 12);
+	 login: async (parent, { email, password }, { models, SECRET, SECRET2 }) => tryLogin(email, password, models, SECRET, SECRET2),
 
+    register: async (parent, args, { models }) => {
+      try {
         // Create/insert the user in the database (other args are username, email ect)
         // Args are from our schema/user/mutation
-        const user = await models.User.create({
-          ...otherArgs,
-          password: hashedPassword,
-        });
+        const user = await models.User.create(args);
 
         return {
           ok: true,

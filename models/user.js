@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt'; // Bcrypt to hash the password
+
 export default (sequelize, DataTypes) => {
   // Define the table called 'user'
   const User = sequelize.define('user', {
@@ -27,7 +29,22 @@ export default (sequelize, DataTypes) => {
         },
       },
     },
-    password: DataTypes.STRING,
+    password: {
+      type: DataTypes.STRING,
+      len: {
+        args: [6, 100],
+        msg: 'The password needs to be between 6 and 100 characters long',
+      },
+    },
+  }, {
+    hooks: {
+      beforeCreate: async (user) => {
+        // Hash the password with 12 saltrounds
+		  const hashedPassword = await bcrypt.hash(user.password, 12);
+
+		  user.password = hashedPassword;
+      },
+    },
   });
 
 

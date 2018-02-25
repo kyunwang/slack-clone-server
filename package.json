@@ -5,7 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "nodemon --exec babel-node index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"push": "git checkout master && git merge develop && git push && git checkout develop"
 	},
 	"author": "",
 	"license": "ISC",
