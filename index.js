@@ -10,9 +10,11 @@ import models from './models';
 // Import the all merged schemas and resolvers
 import { typeDefs, resolvers } from './graphql';
 
+// import environmental variables from our variables.env file
 require('dotenv').config({ path: './variables.env' });
 
-// import environmental variables from our variables.env file
+const SECRET = '1322redfvbnfhrewfas';
+const SECRET2 = 'sdsadnasnfui8o9jl3kndmvmnd';
 
 // The schema and resolvers are combined together
 const schema = makeExecutableSchema({
@@ -40,6 +42,8 @@ app.use(
       user: {
         id: 1,
       },
+      SECRET,
+      SECRET2,
     },
   }),
 );

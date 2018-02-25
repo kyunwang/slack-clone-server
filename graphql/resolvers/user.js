@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt'; // Bcrypt to hash the password
 import _ from 'lodash';
 
+import { tryLogin } from '../../config/auth';
+
 const formatErrors = (err, models) => {
   console.log(err);
 
@@ -22,9 +24,8 @@ export default {
     getAllUsers: (parent, args, { models }) => models.User.findAll(),
   },
   Mutation: {
+    login: async (parent, { email, password }, { models, SECRET, SECRET2 }) => tryLogin(email, password, models, SECRET, SECRET2),
     register: async (parent, { password, ...otherArgs }, { models }) => {
-		 console.log(otherArgs);
-
       try {
         // Check the length of the password
         if (password.length < 6 || password.length > 100) {
