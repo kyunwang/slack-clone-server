@@ -1,6 +1,6 @@
 # Slack-clone-server
 
-Learning along with a tutorial from benawad.
+Learning along with a tutorial from benawad while applying some changes.
 Link to the client [repo](#client-url)
 
 * Graphql
@@ -19,7 +19,8 @@ Not everything is noted here by all means. Only the basic things are noted here 
 	<!-- - [Schema](#) -->
 	<!-- - [Resolvers](#) -->
 <!-- 3. [Semantic-UI](#semantic-ui) -->
-<!-- 3. [](#) -->
+<!-- 3. [JWT](#) -->
+4. [Others](#others)
 
 ## Postgres
 A kind of cheatsheet for myself of the command used:
@@ -259,8 +260,42 @@ Here we simple get the passed in `args` and create a user with it with `models.U
 ```
 Again do not do it this wat. This is just an example to build up on.
 
+## Others
+A list of smaller packages used, which might be of relevance for reference.
+
+A quick rundown of a few used methods.
+
+### Bcrypt
+A library which helps with hashing passwords
+
+[Doc: bcrypt](#bcrypt)
+
+*Note: bcrypt works async*
+
+`e.g. bcrypt.hash()`
+
+- `hash(password: String, saltrounds: Number)`
+Hash the password through the amount of given saltrounds
+- `compare(data: String, encryptedData: String)`
+Compares a already hashed string with a non hashed string
+- ``
+
+
+### JWT
+JSON Web Tokens, a way to stansmit information securely.
+
+[Doc: jwt](#jwt)
+
+
+`e.g. jwt.sign()`
+
+- `sign(payload, secret/privateKey, [options, callback])`
+Return jwt as a string
 
 
 
+[bcrypt](https://github.com/kelektiv/node.bcrypt.js)
+[jwt](https://github.com/auth0/node-jsonwebtoken)
+[]()
 
 [client-url]: https://github.com/kyunwang/slack-clone-client
