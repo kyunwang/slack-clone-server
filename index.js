@@ -10,11 +10,13 @@ import models from './models';
 // Import the all merged schemas and resolvers
 import { typeDefs, resolvers } from './graphql';
 
+import { addUser } from './config/middleWare';
+
+import { SECRET, SECRET2 } from './config/CONSTANTS';
+
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: './variables.env' });
 
-const SECRET = '1322redfvbnfhrewfas';
-const SECRET2 = 'sdsadnasnfui8o9jl3kndmvmnd';
 
 // The schema and resolvers are combined together
 const schema = makeExecutableSchema({
@@ -31,21 +33,21 @@ const app = express();
 // Allow cors on localhost
 app.use(cors('http://localhost'));
 
+app.use(addUser);
+
 // Here we create our endpoint and handle it with graphqlExpress
 app.use(
   graphqlEndpoint,
   bodyParser.json(),
-  graphqlExpress({
+  graphqlExpress(req => ({
     schema, // Here we pass in our schema
     context: {
       models, // We pass in our sequelize/postgres models
-      user: {
-        id: 1,
-      },
+      user: req.user, // Makes user equal to req.user. and available in graphql context
       SECRET,
       SECRET2,
     },
-  }),
+  })),
 );
 
 // Set our graphiql endpoint and tell it what our graphql endpoint is

@@ -291,8 +291,9 @@ JSON Web Tokens, a way to stansmit information securely.
 
 - `sign(payload, secret/privateKey, [options, callback])`
 Return jwt as a string
-
-
+- `verify`
+Checks wether the token is not expired and is signed with ...
+- `decode`
 
 [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 [jwt](https://github.com/auth0/node-jsonwebtoken)

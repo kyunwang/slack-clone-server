@@ -1,15 +1,23 @@
-export default {
 
+import { formatErrors } from '../../config/helpers';
+
+export default {
+  Query: {},
 
   Mutation: {
     createTeam: async (parent, args, { models, user }) => {
       try {
         console.log('Team created');
         await models.Team.create({ ...args, owner: user.id });
-        return true;
+        return {
+          ok: true,
+        };
       } catch (err) {
         console.log('Create team error: ', err);
-        return false;
+        return {
+          ok: false,
+          errors: formatErrors(err, models),
+        };
       }
     },
   },
