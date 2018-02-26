@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+// A function to format errors
 function formatErrors(err, models) {
   // Check if err is a ValidationError
   if (err instanceof models.sequelize.ValidationError) {
@@ -11,5 +12,26 @@ function formatErrors(err, models) {
   return [{ path: 'name', message: 'Something went wrong' }];
 }
 
-export { formatErrors };
+// Takes a resolver to create another one
+function createResolver(resolver) {
+  const baseResolver = resolver;
+
+  // Adding a function createResolver to resolver
+  // Which takes a child resolver and return a new resolver. Childresolver
+  baseResolver.createResolver = (childResolver) => {
+    const newResolver = async (parent, args, context, info) => {
+		 // First execute the resolver passed in the createResolver params
+      await resolver(parent, args, context, info);
+      // Then resolve the passed in resolver/childresolver in madeResolver.createResolver(...)
+      return childResolver(parent, args, context, info);
+    };
+    return createResolver(newResolver);
+  };
+  return baseResolver;
+}
+
+export {
+  formatErrors,
+  createResolver,
+};
 

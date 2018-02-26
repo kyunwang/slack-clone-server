@@ -289,11 +289,12 @@ JSON Web Tokens, a way to stansmit information securely.
 
 `e.g. jwt.sign()`
 
-- `sign(payload, secret/privateKey, [options, callback])`
+- `sign(payload, secret/publicKey, [options, callback])`
 Return jwt as a string
-- `verify`
+- `verify(token, secret/publickey, [options, callback]))`
 Checks wether the token is not expired and is signed with ...
-- `decode`
+- `decode(token, [options])`
+Will decode the *payload* without verifying the token.
 
 [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 [jwt](https://github.com/auth0/node-jsonwebtoken)

@@ -22,7 +22,8 @@ export const createTokens = (user, secret, secret2) => {
 export const refreshTokens = async (token, refreshToken, models, SECRET, SECRET2) => {
   let userId = 0;
   try {
-    // Grab the token to get the id
+	 // Grab the token to get the id
+	 // Decodes the payload without verifying
     const { user: { id } } = jwt.decode(refreshToken);
     userId = id;
   } catch (err) {
@@ -42,6 +43,7 @@ export const refreshTokens = async (token, refreshToken, models, SECRET, SECRET2
     return {};
   }
 
+
   const refreshSecret = user.password + SECRET2;
 
   try {
@@ -51,7 +53,7 @@ export const refreshTokens = async (token, refreshToken, models, SECRET, SECRET2
     return {};
   }
 
-  // Create new tokens
+  // Create new /refresh tokens
   const [newToken, newRefreshToken] = await createTokens(user, SECRET, refreshSecret);
   return {
     token: newToken,
