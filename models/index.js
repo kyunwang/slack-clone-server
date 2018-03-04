@@ -9,12 +9,13 @@ const sequelize = new Sequelize(
   process.env.DB_USERNAME,
   process.env.DB_PASSWORD,
   {
-	  // Specify that we are using postgres
+    // Specify that we are using postgres
 	 dialect: 'postgres',
-	 define: {
-		 // Make our table names snake_cased (doens't snake_case our defined fields e.g. foreign keys)
-		 underscored: true,
-	 },
+	 operatorsAliases: Sequelize.Op,
+    define: {
+      // Make our table names snake_cased (doens't snake_case our defined fields e.g. foreign keys)
+      underscored: true,
+    },
   },
 );
 
