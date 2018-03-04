@@ -3,7 +3,10 @@ import { formatErrors } from '../../config/helpers';
 import { requiresAuth } from '../../config/permissions';
 
 export default {
-  Query: {},
+  Query: {
+	 allTeams: requiresAuth.createResolver(async (parent, args, { models, user }) =>
+	 	models.Team.findAll({ owner: user.id }, { raw: true })),
+  },
 
   Mutation: {
     createTeam: requiresAuth.createResolver(async (parent, args, { models, user }) => {
@@ -21,5 +24,10 @@ export default {
         };
       }
     }),
+  },
+
+
+  Team: {
+    channels: ({ id }, args, { models }) => models.Channel.findAll({ teamId: id }),
   },
 };

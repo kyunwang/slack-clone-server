@@ -5,7 +5,7 @@ import _ from 'lodash';
 export const createTokens = (user, secret, secret2) => {
 // Picking the id to strore in the token
   const createToken = jwt.sign(
-    { user: _.pick(user, ['id']) }, // We pass the id to user
+    { user: _.pick(user, ['id', 'username']) }, // We pass the id to user
     secret, // Signs the token with secret
     { expiresIn: '20m' }, // Expires in ..minutes
   );

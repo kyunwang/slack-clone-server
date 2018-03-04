@@ -1,11 +1,15 @@
 export default `
 	type Team {
+		id: Int!
+		name: String!
 		owner: User!
 		members: [User!]!
-		channel: [Channel!]!
+		channels: [Channel!]!
 	}
 
-	type Query {}
+	type Query {
+		allTeams: [Team!]!
+	}
 
 	type Mutation {
 		createTeam(name: String!): CreateTeamResponse!
